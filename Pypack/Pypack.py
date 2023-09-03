@@ -61,9 +61,9 @@ def pack(**kwargs):
                     Zip.write(Path(kwargs.get('origin'), f"{kwargs.get('files')[i]}"))
             else:
                 if kwargs.get('files') == 'all':
-                    for carpetas, subcarpetas, archivos in os.walk(kwargs.get('origin')):
+                    for carpetas, subcarpetas, archivos in os.walk(kwargs.get('origin'), topdown=True):
                         for a in archivos:
-                            Zip.write(Path(kwargs.get('origin'),f"{a}"))
+                            Zip.write(os.path.join(carpetas,a))
                 else:
                     Zip.write(Path(kwargs.get('origin'),f"{kwargs.get('files')}"))
             Zip.close()
@@ -74,9 +74,9 @@ def pack(**kwargs):
                     Zip.write(Path(kwargs.get('origin'),f"{kwargs.get('files')[i]}"))
             else:
                 if kwargs.get('files') == 'all':
-                    for carpetas, subcarpetas, archivos in os.walk(kwargs.get('origin')):
+                    for carpetas, subcarpetas, archivos in os.walk(kwargs.get('origin'), topdown=True):
                         for a in archivos:
-                            Zip.write(Path(kwargs.get('origin'),f"{a}"))
+                            Zip.write(os.path.join(carpetas, a))
                 else:
                     Zip.write(Path(kwargs.get('origin'),f"{kwargs.get('files')}"))
             Zip.close()
@@ -100,16 +100,15 @@ def pack(**kwargs):
                     Zip.write(kwargs.get('files')[i])
             else:
                 if kwargs.get('files') == 'all':
-                    for carpetas, subcarpetas, archivos in os.walk(os.getcwd()):
+                    for carpetas, subcarpetas, archivos in os.walk(os.getcwd(), topdown=True):
                         for a in archivos:
-                            Zip.write(a)
+                            Zip.write(os.path.join(carpetas, a))
                 else:
                     Zip.write(kwargs.get('files'))
             Zip.close()
         else:
             return '\n...Debes de ingresar almenos una constante correcta'
     except FileNotFoundError:
-        pass
+        return f"\n...Revisa bien el nombre de los datos ingresados"
     else:
         return f'\nPack with name "{name}"'
-
