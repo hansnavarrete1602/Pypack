@@ -1,3 +1,4 @@
+"""by Hans Navarrete"""
 from pathlib import Path
 import send2trash
 import datetime
